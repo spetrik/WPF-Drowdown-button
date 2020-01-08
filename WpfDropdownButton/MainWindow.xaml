@@ -5,8 +5,266 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfDropdownButton"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="MainWindow" Height="550" Width="800">
+
+  <Window.Resources>
+    <ResourceDictionary>
+      <Geometry x:Key="UpArrowGeometry">M 0 4 L 4 0 L 8 4 Z</Geometry>
+      <Geometry x:Key="DownArrowGeometry">M 0 0 L 4 4 L 8 0 Z</Geometry>
+      <ContextMenu x:Key="AAA">
+        <MenuItem Header="Add 1"/>
+        <MenuItem Header="Add 2"/>
+        <MenuItem Header="Add 3"/>
+      </ContextMenu>
+    </ResourceDictionary>
+  </Window.Resources>
+
+  <StackPanel>
+    <TextBlock Margin="20 0 0 0" FontSize="16">My version</TextBlock>
+    <ToolBar Height="32">
+      <Button>Dummy</Button>
+      <ToggleButton Name="MyVersion" Background="Transparent" BorderBrush="Transparent" ContextMenuService.Placement="Bottom" 
+                    IsThreeState="False" Checked="MyVersion_OnChecked">
+        <ContentControl>
+          <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal">
+              <Path Fill="Black" Width="24" Height="24" Data="M12,10L8,14H11V20H13V14H16M19,4H5C3.89,4 3,4.9 3,6V18A2,2 0 0,0 5,20H9V18H5V8H19V18H15V20H19A2,2 0 0,0 21,18V6A2,2 0 0,0 19,4Z"></Path>
+              <Path Data="{StaticResource DownArrowGeometry}" Fill="Black" VerticalAlignment="Center" />
+            </StackPanel>
+          </StackPanel>
+        </ContentControl>
+        <ToggleButton.Resources>
+          <ContextMenu x:Key="cm" StaysOpen="False" Placement="Bottom" PlacementTarget="{Binding ElementName=BtnSelectLayout}"
+                       IsOpen="{Binding IsChecked, ElementName=BtnSelectLayout, Mode=TwoWay}">
+            <MenuItem Header="Copy"></MenuItem>
+            <MenuItem Header="Paste"></MenuItem>
+            <MenuItem Header="Delete"></MenuItem>
+          </ContextMenu>
+        </ToggleButton.Resources>
+      </ToggleButton>
+      <Separator/>
+      <Button>Dummy</Button>
+    </ToolBar>
+
+    <TextBlock></TextBlock>
+    <TextBlock TextWrapping="Wrap">With popup (see Maxim Prasolov comment on https://stackoverflow.com/questions/14252180/how-do-i-correctly-bind-a-popup-to-a-togglebutton)</TextBlock>
+    <ToolBar Height="32">
+      <Button>Dummy</Button>
+      <!-- -->
+      <ToggleButton x:Name="TogglePopupButtonX">
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Margin="2" VerticalAlignment="Center">Print</TextBlock>
+          <Path Fill="Black" Width="24" Height="24" Data="M18,3H6V7H18M19,12A1,1 0 0,1 18,11A1,1 0 0,1 19,10A1,1 0 0,1 20,11A1,1 0 0,1 19,12M16,19H8V14H16M19,8H5A3,3 0 0,0 2,11V17H6V21H18V17H22V11A3,3 0 0,0 19,8Z"></Path>
+        </StackPanel>
+        <ToggleButton.Style>
+          <Style TargetType="{x:Type ToggleButton}">
+            <Setter Property="IsHitTestVisible" Value="True"/>
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding ElementName=Popup, Path=IsOpen}" Value="True">
+                <Setter Property="IsHitTestVisible" Value="False"/>
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </ToggleButton.Style>
+      </ToggleButton>
+
+      <Popup StaysOpen="false" IsOpen="{Binding IsChecked, ElementName=TogglePopupButtonX, Mode=TwoWay}"
+             PlacementTarget="{Binding ElementName=TogglePopupButtonX}" PopupAnimation="Slide" 
+             x:Name="Popup">
+        <Border Width="100" Height="200" Background="White" BorderThickness="1" BorderBrush="Black">
+          <TextBlock>This is a test</TextBlock>
+        </Border>
+      </Popup>
+      <Separator/>
+      <Button>Dummy</Button>
+    </ToolBar>
+
+    <TextBlock></TextBlock>
+    <TextBlock>With menu items popup</TextBlock>
+    <ToolBar>
+      <Button>Dummy</Button>
+      <ToggleButton Name="ybtnPrint" ToolTip="Print your documents">
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Margin="2" VerticalAlignment="Center">Print</TextBlock>
+          <Path Fill="Black" Width="24" Height="24" Data="M18,3H6V7H18M19,12A1,1 0 0,1 18,11A1,1 0 0,1 19,10A1,1 0 0,1 20,11A1,1 0 0,1 19,12M16,19H8V14H16M19,8H5A3,3 0 0,0 2,11V17H6V21H18V17H22V11A3,3 0 0,0 19,8Z"></Path>
+        </StackPanel>
+        <ToggleButton.Style>
+          <Style TargetType="{x:Type ToggleButton}">
+            <Setter Property="IsHitTestVisible" Value="True"/>
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding ElementName=ypopupPrint, Path=IsOpen}" Value="True">
+                <Setter Property="IsHitTestVisible" Value="False"/>
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </ToggleButton.Style>
+      </ToggleButton>
+
+      <!-- Print Toggle Button Popup -->
+      <Popup x:Name="ypopupPrint" StaysOpen="False" PlacementTarget="{Binding ElementName=ybtnPrint}"
+             IsOpen="{Binding IsChecked, ElementName=ybtnPrint, Mode=TwoWay}"  PopupAnimation="Slide">
+        <Menu BorderThickness="1" BorderBrush="Gray">
+          <Menu.ItemsPanel>
+            <ItemsPanelTemplate>
+              <VirtualizingStackPanel Orientation="Vertical"/>
+            </ItemsPanelTemplate>
+          </Menu.ItemsPanel>
+          <MenuItem Header="Copy">
+            <MenuItem.Icon>
+              <Viewbox Width="20" Height="20">
+              <Image Source="Resources/print.png"/>
+              </Viewbox>
+            </MenuItem.Icon>
+          </MenuItem>
+          <MenuItem Header="Paste"></MenuItem>
+          <MenuItem Header="Delete"></MenuItem>
+        </Menu>
+      </Popup>
+      <Separator/>
+      <Button>Dummy</Button>
+    </ToolBar>
+
+    <TextBlock></TextBlock>
+    <TextBlock>see https://dvoituron.wordpress.com/2011/01/06/toolbar-dropdownbutton-in-wpf/</TextBlock>
+    <ToolBar>
+      <!-- Resources to manage the Popup Button -->
+      <ToolBar.Resources>
+        <Style TargetType="{x:Type Popup}">
+          <EventSetter Event="Button.Click" Handler="popup_Click" />
+        </Style>
+        <!-- Popup outer border -->
+        <Style TargetType="{x:Type Border}">
+          <Setter Property="Background" Value="{StaticResource {x:Static SystemColors.MenuBrushKey}}" />
+          <Setter Property="BorderThickness" Value="1" />
+          <!--<Setter Property="Padding" Value="2" />-->
+        </Style>
+        <!-- popup items -->
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+          <Setter Property="HorizontalAlignment"        Value="Stretch" />
+          <Setter Property="HorizontalContentAlignment" Value="Left" />
+        </Style>
+      </ToolBar.Resources>
+      <Button>Dummy</Button>
+      <ToggleButton Name="btnPrint" ToolTip="Print your documents">
+        <StackPanel Orientation="Horizontal">
+          <Image Source="Resources/print.png" />
+          <TextBlock Margin="2" VerticalAlignment="Center">Print</TextBlock>
+        </StackPanel>
+        <ToggleButton.Style>
+          <Style TargetType="{x:Type ToggleButton}">
+            <Setter Property="IsHitTestVisible" Value="True"/>
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding ElementName=popupPrint, Path=IsOpen}" Value="True">
+                <Setter Property="IsHitTestVisible" Value="False"/>
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </ToggleButton.Style>
+      </ToggleButton>
+
+      <!-- Print Toggle Button Popup -->
+      <Popup x:Name="popupPrint" StaysOpen="False" PlacementTarget="{Binding ElementName=btnPrint}"
+             IsOpen="{Binding IsChecked, ElementName=btnPrint, Mode=TwoWay}"  PopupAnimation="Slide">
+        <Border>
+          <StackPanel>
+            <!-- Print to local -->
+            <Button ToolTip="Print your documents to a local printer">
+              <StackPanel Orientation="Horizontal">
+                <Viewbox Width="20" Height="20">
+                  <Image Source="Resources/print.png" />
+                </Viewbox>
+                <TextBlock Margin="0" VerticalAlignment="Center">Print to local</TextBlock>
+              </StackPanel>
+            </Button>
+            <!-- Print to network -->
+            <Button ToolTip="Print your documents to a network printer">
+              <StackPanel Orientation="Horizontal">
+                <Viewbox Width="20" Height="20">
+                  <Image Source="Resources/print.png" />
+                </Viewbox>
+                <TextBlock Margin="0" VerticalAlignment="Center">Print to network</TextBlock>
+              </StackPanel>
+            </Button>
+            <Button ToolTip="Print your documents to a network printer">
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Margin="2" VerticalAlignment="Center">XX Print to network</TextBlock>
+              </StackPanel>
+            </Button>
+          </StackPanel>
+        </Border>
+      </Popup>
+
+      <Separator/>
+      <Button>Dummy</Button>
+    </ToolBar>
+
+    <TextBlock></TextBlock>
+    <TextBlock>Split button like Xceed.Wpf.Toolkit split button</TextBlock>
+    <ToolBar>
+      <Button>Dummy</Button>
+      <Button>AAAA</Button>
+      <Button VerticalAlignment="Stretch">
+        <ContentControl>
+          <Path Data="{StaticResource DownArrowGeometry}" Fill="Black" VerticalAlignment="Center"/>
+        </ContentControl>
+      </Button>
+      <Separator/>
+      <Button>Dummy</Button>
+    </ToolBar>
+
+    <TextBlock></TextBlock>
+    <TextBlock>Split button: need to adjust button borders</TextBlock>
+    <ToolBar>
+      <Button>Dummy</Button>
+      <Button Padding="1">
+        <ContentControl>
+          <Grid Margin="0">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition></ColumnDefinition>
+              <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Padding="0" Margin="0" CornerRadius="0" BorderThickness="1" BorderBrush="Black">
+              <Button Margin="0" BorderThickness="0" Background="Transparent" BorderBrush="Transparent">
+                XXX
+              </Button>
+            </Border>
+
+            <Button Grid.Column="1" Background="Transparent" BorderBrush="Transparent" Margin="0 0 0 0">
+              <ContentControl>
+                <Path Data="{StaticResource DownArrowGeometry}" Fill="Black" VerticalAlignment="Center"/>
+              </ContentControl>
+            </Button>
+          </Grid>
+        </ContentControl>
+      </Button>
+      <Separator/>
+      <Button>Dummy</Button>
+    </ToolBar>
+
+    <TextBlock></TextBlock>
+    <TextBlock>Split button: need to adjust radius of button borders</TextBlock>
+    <ToolBar>
+      <Button>Dummy</Button>
+      <Button Padding="1" Background="Transparent" BorderBrush="Transparent">
+        <ContentControl>
+          <Grid Margin="0">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition></ColumnDefinition>
+              <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+              <Button Grid.Column="0" Margin="0" BorderThickness="0" Background="Transparent" BorderBrush="Transparent">
+                XXX
+              </Button>
+            <Button Grid.Column="1" Background="Transparent" BorderBrush="Transparent" Margin="0 0 0 0">
+              <ContentControl>
+                <Path Data="{StaticResource DownArrowGeometry}" Fill="Black" VerticalAlignment="Center"/>
+              </ContentControl>
+            </Button>
+          </Grid>
+        </ContentControl>
+      </Button>
+      <Separator/>
+      <Button>Dummy</Button>
+    </ToolBar>
+  </StackPanel>
 </Window>

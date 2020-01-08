@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Controls.Primitives;
 
 namespace WpfDropdownButton
 {
@@ -23,6 +12,27 @@ namespace WpfDropdownButton
     public MainWindow()
     {
       InitializeComponent();
+    }
+
+    private void MyVersion_OnChecked(object sender, RoutedEventArgs e)
+    {
+      if (sender is ToggleButton button && Equals(button.IsChecked, true))
+      {
+        var cm = button.Resources["cm"] as ContextMenu;
+        if (cm.PlacementTarget == null)
+        {
+          cm.PlacementTarget = button;
+          cm.Placement = PlacementMode.Bottom;
+          cm.Closed += (senderClosed, eClosed) => ((ToggleButton)sender).IsChecked = false;
+        }
+        cm.IsOpen = true;
+      }
+    }
+
+    private void popup_Click(object sender, RoutedEventArgs e)
+    {
+      if (sender is Popup popup)
+        popup.IsOpen = false;
     }
   }
 }
