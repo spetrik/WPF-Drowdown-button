@@ -99,5 +99,8 @@
     <Resource Include="Resources\Save.png" />
     <Resource Include="Resources\print.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="DropdownButtonDemo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

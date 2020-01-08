@@ -22,7 +22,8 @@
   <StackPanel>
     <TextBlock Margin="20 0 0 0" FontSize="16">My version</TextBlock>
     <ToolBar Height="32">
-      <Button>Dummy</Button>
+      <Button>Dummy button</Button>
+      <Separator/>
       <ToggleButton Name="MyVersion" Background="Transparent" BorderBrush="Transparent" ContextMenuService.Placement="Bottom" 
                     IsThreeState="False" Checked="MyVersion_OnChecked">
         <ContentControl>
@@ -42,7 +43,6 @@
         </ToggleButton.Resources>
       </ToggleButton>
       <Separator/>
-      <Button>Dummy</Button>
 
       <ToggleButton Name="MyVersion2" Background="Transparent" BorderBrush="Transparent" ContextMenuService.Placement="Bottom" 
                     IsThreeState="False" Checked="MyVersion2_OnChecked">
