@@ -34,8 +34,7 @@
           </StackPanel>
         </ContentControl>
         <ToggleButton.Resources>
-          <ContextMenu x:Key="cm" StaysOpen="False" Placement="Bottom" PlacementTarget="{Binding ElementName=BtnSelectLayout}"
-                       IsOpen="{Binding IsChecked, ElementName=BtnSelectLayout, Mode=TwoWay}">
+          <ContextMenu x:Key="cm" StaysOpen="False" Placement="Bottom">
             <MenuItem Header="Copy"></MenuItem>
             <MenuItem Header="Paste"></MenuItem>
             <MenuItem Header="Delete"></MenuItem>
@@ -44,6 +43,32 @@
       </ToggleButton>
       <Separator/>
       <Button>Dummy</Button>
+
+      <ToggleButton Name="MyVersion2" Background="Transparent" BorderBrush="Transparent" ContextMenuService.Placement="Bottom" 
+                    IsThreeState="False" Checked="MyVersion2_OnChecked">
+        <ContentControl>
+          <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal">
+              <Path Fill="Black" Width="24" Height="24" Data="M12,10L8,14H11V20H13V14H16M19,4H5C3.89,4 3,4.9 3,6V18A2,2 0 0,0 5,20H9V18H5V8H19V18H15V20H19A2,2 0 0,0 21,18V6A2,2 0 0,0 19,4Z"></Path>
+              <Path Data="{StaticResource DownArrowGeometry}" Fill="Black" VerticalAlignment="Center" />
+            </StackPanel>
+          </StackPanel>
+        </ContentControl>
+        <ToggleButton.Resources>
+          <Popup x:Key="cm" StaysOpen="False" Placement="Bottom" MinWidth="60">
+            <Menu FontSize="13" BorderThickness="1">
+              <Menu.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <VirtualizingStackPanel Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+              </Menu.ItemsPanel>
+              <MenuItem Header="Copy"></MenuItem>
+              <MenuItem Header="Paste"></MenuItem>
+              <MenuItem Header="Delete"></MenuItem>
+            </Menu>
+          </Popup>
+        </ToggleButton.Resources>
+      </ToggleButton>
     </ToolBar>
 
     <TextBlock></TextBlock>
