@@ -11,11 +11,6 @@
     <ResourceDictionary>
       <Geometry x:Key="UpArrowGeometry">M 0 4 L 4 0 L 8 4 Z</Geometry>
       <Geometry x:Key="DownArrowGeometry">M 0 0 L 4 4 L 8 0 Z</Geometry>
-      <ContextMenu x:Key="AAA">
-        <MenuItem Header="Add 1"/>
-        <MenuItem Header="Add 2"/>
-        <MenuItem Header="Add 3"/>
-      </ContextMenu>
     </ResourceDictionary>
   </Window.Resources>
 
@@ -24,8 +19,7 @@
     <ToolBar Height="32">
       <Button>Dummy button</Button>
       <Separator/>
-      <ToggleButton Name="MyVersion" Background="Transparent" BorderBrush="Transparent" ContextMenuService.Placement="Bottom" 
-                    IsThreeState="False" Checked="MyVersion_OnChecked">
+      <ToggleButton Name="MyVersion" Background="Transparent" BorderBrush="Transparent" IsThreeState="False" Checked="MyVersion_OnChecked">
         <ContentControl>
           <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Horizontal">
@@ -35,7 +29,7 @@
           </StackPanel>
         </ContentControl>
         <ToggleButton.Resources>
-          <ContextMenu x:Key="cm" StaysOpen="False" Placement="Bottom">
+          <ContextMenu x:Key="items" StaysOpen="False" Placement="Bottom">
             <MenuItem Header="Copy"></MenuItem>
             <MenuItem Header="Paste"></MenuItem>
             <MenuItem Header="Delete"></MenuItem>
@@ -44,8 +38,7 @@
       </ToggleButton>
       <Separator/>
 
-      <ToggleButton Name="MyVersion2" Background="Transparent" BorderBrush="Transparent" ContextMenuService.Placement="Bottom" 
-                    IsThreeState="False" Checked="MyVersion2_OnChecked">
+      <ToggleButton Name="MyVersion2" Background="Transparent" BorderBrush="Transparent" IsThreeState="False" Checked="MyVersion_OnChecked">
         <ContentControl>
           <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Horizontal">
@@ -55,7 +48,7 @@
           </StackPanel>
         </ContentControl>
         <ToggleButton.Resources>
-          <Popup x:Key="cm" StaysOpen="False" Placement="Bottom" MinWidth="60">
+          <Popup x:Key="items" StaysOpen="False" Placement="Bottom" MinWidth="60">
             <Menu FontSize="13" BorderThickness="1">
               <Menu.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -137,7 +130,7 @@
           <MenuItem Header="Copy">
             <MenuItem.Icon>
               <Viewbox Width="20" Height="20">
-              <Image Source="Resources/print.png"/>
+                <Image Source="Resources/print.png"/>
               </Viewbox>
             </MenuItem.Icon>
           </MenuItem>
@@ -277,9 +270,9 @@
               <ColumnDefinition></ColumnDefinition>
               <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-              <Button Grid.Column="0" Margin="0" BorderThickness="0" Background="Transparent" BorderBrush="Transparent">
-                XXX
-              </Button>
+            <Button Grid.Column="0" Margin="0" BorderThickness="0" Background="Transparent" BorderBrush="Transparent">
+              XXX
+            </Button>
             <Button Grid.Column="1" Background="Transparent" BorderBrush="Transparent" Margin="0 0 0 0">
               <ContentControl>
                 <Path Data="{StaticResource DownArrowGeometry}" Fill="Black" VerticalAlignment="Center"/>

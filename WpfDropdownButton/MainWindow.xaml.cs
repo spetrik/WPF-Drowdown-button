@@ -18,29 +18,28 @@ namespace WpfDropdownButton
     {
       if (sender is ToggleButton button && Equals(button.IsChecked, true))
       {
-        var cm = button.Resources["cm"] as ContextMenu;
-        if (cm.PlacementTarget == null)
+        var items = button.Resources["items"];
+        if (items is ContextMenu)
         {
-          cm.PlacementTarget = button;
-          cm.Placement = PlacementMode.Bottom;
-          cm.Closed += (senderClosed, eClosed) => ((ToggleButton)sender).IsChecked = false;
-        }
-        cm.IsOpen = true;
-      }
-    }
-
-    private void MyVersion2_OnChecked(object sender, RoutedEventArgs e)
-    {
-      if (sender is ToggleButton button && Equals(button.IsChecked, true))
-      {
-        var cm = button.Resources["cm"] as Popup;
-        if (cm.PlacementTarget == null)
+          var cm = (ContextMenu) items;
+          if (cm.PlacementTarget == null)
+          {
+            cm.PlacementTarget = button;
+            cm.Placement = PlacementMode.Bottom;
+            cm.Closed += (senderClosed, eClosed) => ((ToggleButton)sender).IsChecked = false;
+          }
+          cm.IsOpen = true;
+        } else if (items is Popup)
         {
-          cm.PlacementTarget = button;
-          cm.Placement = PlacementMode.Bottom;
-          cm.Closed += (senderClosed, eClosed) => ((ToggleButton)sender).IsChecked = false;
+          var popup = (Popup)items;
+          if (popup.PlacementTarget == null)
+          {
+            popup.PlacementTarget = button;
+            popup.Placement = PlacementMode.Bottom;
+            popup.Closed += (senderClosed, eClosed) => ((ToggleButton)sender).IsChecked = false;
+          }
+          popup.IsOpen = true;
         }
-        cm.IsOpen = true;
       }
     }
 
