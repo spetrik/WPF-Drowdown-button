@@ -14,7 +14,7 @@ namespace WpfDropdownButton
       InitializeComponent();
     }
 
-    private void MyVersion_OnChecked(object sender, RoutedEventArgs e)
+    private void DropDownButton_OnChecked(object sender, RoutedEventArgs e)
     {
       if (sender is ToggleButton button && Equals(button.IsChecked, true))
       {
